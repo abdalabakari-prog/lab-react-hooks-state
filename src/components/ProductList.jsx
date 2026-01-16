@@ -1,25 +1,35 @@
 import React from 'react'
-import styles from '../styles/ProductCard.module.css'
+import ProductCard from './ProductCard'
 
-const ProductCard = ({ product, addToCart }) => {
+// Sample product data
+export const sampleProducts = [
+  { id: 1, name: 'Apple', price: '$1.00', category: 'Fruits', inStock: true },
+  { id: 2, name: 'Milk', price: '$2.50', category: 'Dairy', inStock: false },
+  { id: 3, name: 'Banana', price: '$0.80', category: 'Fruits', inStock: true },
+  { id: 4, name: 'Cheese', price: '$3.00', category: 'Dairy', inStock: true },
+  { id: 5, name: 'Orange', price: '$1.20', category: 'Fruits', inStock: true }
+]
+
+const ProductList = ({ selectedCategory, addToCart }) => {
+  // Filter products based on selected category
+  const filteredProducts = selectedCategory === 'all'
+    ? sampleProducts
+    : sampleProducts.filter(product => product.category === selectedCategory)
+
   return (
-    <div
-      className={`${styles.card} ${!product.inStock ? styles.outOfStock : ''}`}
-    >
-      <h3>{product.name}</h3>
-      <p>Price: {product.price}</p>
-      <p>Status: {product.inStock ? 'In Stock' : 'Out of Stock'}</p>
-      
-      {/* Add to Cart button */}
-      <button 
-        data-testid={'product-' + product.id}
-        onClick={() => addToCart(product)}
-        disabled={!product.inStock}
-      >
-        Add to Cart
-      </button>
+    <div>
+      <h2>Available Products</h2>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+        {filteredProducts.map((product) => (
+          <ProductCard 
+            key={product.id} 
+            product={product}
+            addToCart={addToCart}
+          />
+        ))}
+      </div>
     </div>
   )
 }
 
-export default ProductCard
+export default ProductList
