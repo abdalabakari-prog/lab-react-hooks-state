@@ -1,23 +1,25 @@
 import React from 'react'
-import ProductCard from './ProductCard'
+import styles from '../styles/ProductCard.module.css'
 
-// Sample product data (for display purposes only)
-export const sampleProducts = [
-  { id: 1, name: 'Apple', price: '$1.00', category: 'Fruits', inStock: true },
-  { id: 2, name: 'Milk', price: '$2.50', category: 'Dairy', inStock: false }
-]
-
-const ProductList = () => {
+const ProductCard = ({ product, addToCart }) => {
   return (
-    <div>
-      <h2>Available Products</h2>
-
-      {/* TODO: Filter sample data using selected category */}
-      {sampleProducts.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+    <div
+      className={`${styles.card} ${!product.inStock ? styles.outOfStock : ''}`}
+    >
+      <h3>{product.name}</h3>
+      <p>Price: {product.price}</p>
+      <p>Status: {product.inStock ? 'In Stock' : 'Out of Stock'}</p>
+      
+      {/* Add to Cart button */}
+      <button 
+        data-testid={'product-' + product.id}
+        onClick={() => addToCart(product)}
+        disabled={!product.inStock}
+      >
+        Add to Cart
+      </button>
     </div>
   )
 }
 
-export default ProductList
+export default ProductCard
