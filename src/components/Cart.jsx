@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Cart = ({ cart }) => {
   return (
@@ -12,7 +12,7 @@ const Cart = ({ cart }) => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;
